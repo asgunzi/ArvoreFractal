@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+
+ <title>Árvores fractais</title>
+ 
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+</head>
+<style>
+</style>	
+
+
+<body>
+
+      <h1><a href="https://ideiasesquecidas.com"> <img src=	"https://ideiasesquecidas.files.wordpress.com/2020/03/forgottenlogo.png" width="90" height = "50"></a>Árvores fractais</h1>
+
+
+<p>
+<button onclick="Desenhar()">Rodar</button>
+</p>
+
+
+</Body>   
+</Html>  
+
+<script type = "text/javascript">
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("width", 1520)
+        .attr("height", 800);
+   
+	Desenhar();
+
+	function Desenhar()
+	{
+	svg.selectAll("*").remove();
+
+	//---------------------------------------------------------------
+	var xn;
+	var raion;
+	var angulon;
+	var profundn;
+	var corR; 
+	var corG; 
+	var corB;
+	
+	//Escolhe posições aleatórias
+		xn = Math.random() * 300 +300; //Posicao x
+		raion = Math.random() * 100 +100; //Raio inicial
+		angulon = - (Math.random() * 60 +60); //Angulo inicial
+		profundn = 3+ Math.floor(Math.random()*3); //Profundidade
+		corR = Math.floor(Math.random()*200);
+		corG = Math.floor(Math.random()*200);
+		corB = Math.floor(Math.random()*200) ;
+
+	//Plota a funcao recursiva
+		arvore(xn, 600, raion, angulon, profundn, corR, corG, corB);
+
+	}
+
+	function arvore(x0, y0, raio, angulo, 	profundidade, corR, corG, corB)
+	{
+
+	var x1 = x0;
+	var y1 = y0;
+	var x2;
+	var y2;
+	x2 = x1 + raio*Math.cos(angulo*3.1415/180);
+	y2 = y1 + raio*Math.sin(angulo*3.1415/180);
+	
+	ramo(x1,y1,x2,y2, corR, corG, corB);	
+
+	
+	if (profundidade>0)
+	{
+		arvore(x2, y2, raio/2, angulo -  30, profundidade-1, corR, corG, corB);
+		arvore(x2, y2, raio/2, angulo + 0,  profundidade-1, corR, corG, corB);
+		arvore(x2, y2, raio/2, angulo + 30, profundidade-1, corR, corG, corB);
+	
+	}
+	
+	}
+	
+	
+	
+	function ramo(xa,ya,xb,yb, corR, corG, corB)
+	{
+		svg.append("line")
+		  .attr("x1", xa)
+		  .attr("y1", ya)
+		  .attr("x2", xb)
+		  .attr("y2", yb)
+		  .attr("stroke", d3.rgb(corR, corG, corB))
+		  .attr("stroke-width", 1)
+	}
+
+
+
+  </script>
+</body>
+</html>
